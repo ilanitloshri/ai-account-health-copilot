@@ -37,8 +37,22 @@ The app should help me see which accounts are healthy, which are at risk, and wh
 - Real public news from Exa may only be used for real, public companies when that makes sense. Keep it clearly separate from the made-up account data.
 
 ## Running the app
+- Python **3.14** (installed from python.org at `/usr/local/bin/python3.14`). The Mac's built-in Python 3.9 is too old. Don't use it.
+- Add-ons live in a project environment called `.venv`, which is excluded from git. Always run things with `.venv/bin/python`.
+
+First-time setup (or to rebuild):
 ```
-pip install -r requirements.txt
-streamlit run app.py
+/usr/local/bin/python3.14 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+Test the Claude connection:
+```
+.venv/bin/python test_claude.py
+```
+
+Run the app (once it exists):
+```
+.venv/bin/streamlit run app.py
 ```
 (Update this section if the file names change.)
