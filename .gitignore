@@ -1,0 +1,12 @@
+# Secret API keys: never upload these
+.env
+.streamlit/secrets.toml
+
+# Python clutter
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Mac clutter
+.DS_Store
