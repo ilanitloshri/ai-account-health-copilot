@@ -10,3 +10,6 @@ venv/
 
 # Mac clutter
 .DS_Store
+
+# Claude Code app settings (local only)
+.claude/
