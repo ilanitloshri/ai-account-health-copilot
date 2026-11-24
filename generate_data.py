@@ -11,6 +11,10 @@ import pandas as pd
 
 random.seed(42)  # same seed = same made-up data every run
 
+# Separate randomness for columns added later, so adding them
+# doesn't change the values of the original columns
+extra_random = random.Random(7)
+
 # The date the data is "as of" (fixed so the data doesn't change day to day)
 DATA_AS_OF = date(2026, 11, 24)
 
@@ -130,6 +134,10 @@ def make_account(account_number, segment, used_names):
     survey_score = random.randint(*{"healthy": (8, 10), "watch": (6, 8), "at_risk": (2, 6)}[health])
     days_since_qbr = random.randint(*{"healthy": (10, 80), "watch": (60, 150), "at_risk": (100, 240)}[health])
 
+    # Last call with the executive sponsor: recent if engaged, long ago if quiet or gone
+    days_since_sponsor_call = extra_random.randint(*{
+        "Engaged": (5, 45), "Quiet": (60, 180), "Left company": (90, 270)}[sponsor_status])
+
     # Dates
     renewal_date = DATA_AS_OF + timedelta(days=random.randint(7, 365))
     contract_start = renewal_date - timedelta(days=365 * random.randint(1, 3))
@@ -151,6 +159,7 @@ def make_account(account_number, segment, used_names):
         "exec_sponsor": f"{random.choice(FIRST_NAMES)} {random.choice(LAST_NAMES)}",
         "exec_sponsor_title": random.choice(SPONSOR_TITLES[segment]),
         "sponsor_status": sponsor_status,
+        "last_sponsor_call_date": DATA_AS_OF - timedelta(days=days_since_sponsor_call),
         "last_survey_score": survey_score,
         "last_qbr_date": DATA_AS_OF - timedelta(days=days_since_qbr),
         "csm_note": random.choice(NOTES[health]),
